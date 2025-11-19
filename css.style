@@ -1,0 +1,240 @@
+/* ------------------------------------------------ */
+/*  GLOBAL STYLES                                   */
+/* ------------------------------------------------ */
+
+:root {
+  --bg-dark: #0d0d0f;
+  --bg-card: #1b1b1f;
+  --bg-secondary: #26262c;
+  --accent: #8a63ff;
+  --text-light: #f5f5f5;
+  --text-muted: #b0b0b0;
+  --radius: 14px;
+  --shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  --transition: 0.25s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Jost", sans-serif;
+}
+
+body {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  padding: 2rem;
+  line-height: 1.6;
+}
+
+
+/* ------------------------------------------------ */
+/* HEADER                                           */
+/* ------------------------------------------------ */
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+header h4 {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+
+/* ------------------------------------------------ */
+/* STATUS SECTION                                   */
+/* ------------------------------------------------ */
+
+#status {
+  background: var(--bg-card);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+#status p {
+  margin: 0.3rem 0;
+}
+
+
+/* ------------------------------------------------ */
+/* BUTTONS                                          */
+/* ------------------------------------------------ */
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  font-weight: 600;
+}
+
+#createButton,
+.save {
+  background: var(--accent);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+#createButton:hover,
+.save:hover {
+  background: #a78bff;
+}
+
+.cancel {
+  background: var(--bg-secondary);
+  color: var(--text-light);
+}
+
+.cancel:hover {
+  background: #3a3a44;
+}
+
+
+/* ------------------------------------------------ */
+/* POPOVER (FORM MODAL)                             */
+/* ------------------------------------------------ */
+
+#formPopover {
+  background: var(--bg-card);
+  color: var(--text-light);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  width: min(450px, 90vw);
+  margin: 0 auto;
+  border: 1px solid #333;
+}
+
+#formPopover h2 {
+  margin-bottom: 0.3rem;
+}
+
+#formPopover p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* Disable popover animation quirks */
+[popover] {
+  inset: 0;
+  margin: auto;
+}
+
+
+/* ------------------------------------------------ */
+/* FORM                                             */
+/* ------------------------------------------------ */
+
+form fieldset {
+  margin-bottom: 1.2rem;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+input,
+select,
+textarea {
+  background: var(--bg-secondary);
+  color: var(--text-light);
+  border: 1px solid #3a3a3f;
+  padding: 0.6rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+small.validation {
+  display: none;
+  color: #ff7b7b;
+}
+
+
+/* ------------------------------------------------ */
+/* MAIN CONTENT SECTION                             */
+/* ------------------------------------------------ */
+
+main {
+  margin-top: 2.5rem;
+}
+
+main h2 {
+  margin-bottom: 1rem;
+}
+
+/* Individual ticket cards */
+#contentArea > div {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+#contentArea h3 {
+  margin-bottom: 0.4rem;
+}
+
+#contentArea p {
+  color: var(--text-muted);
+  margin: 0.2rem 0;
+}
+
+
+/* ------------------------------------------------ */
+/* INTRO SECTION                                    */
+/* ------------------------------------------------ */
+
+#intro {
+  background: var(--bg-card);
+  padding: 2rem;
+  margin-top: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+#intro h3 {
+  margin-bottom: 0.6rem;
+}
+
+#intro p,
+#intro li {
+  color: var(--text-muted);
+}
+
+
+/* ------------------------------------------------ */
+/* FOOTER                                           */
+/* ------------------------------------------------ */
+
+footer {
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: 3rem;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
