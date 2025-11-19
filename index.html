@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>Concert Ticket Manager</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&display=swap"
+    rel="stylesheet"
+  >
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
+
+  <!--  DOMPurify cleans up HTML to prevent XSS attacks -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.3.0/dist/purify.min.js"></script>
+
+</head>
+
+<body>
+  <header>
+    <h1>Concert Ticket Manager</h1>
+    <h4>CRUD: Save, edit, and track your concerts</h4>
+  </header>
+
+  <section id="status">
+    <p id="readyStatus">✅ MongoDB is Ready</p>
+    <p id="notReadyStatus">
+      ❌ MongoDB is not connected. Please check your connection string in
+      <code>.env</code> file.
+    </p>
+  </section>
+
+  <button
+    id="createButton"
+    popovertarget="formPopover"
+  >
+    Create New Ticket
+  </button>
+
+  <div
+    id="formPopover"
+    popover
+  >
+    <h2>Add a Concert Ticket</h2>
+    <p>Store details about a concert that you’re going to or have attended.</p>
+
+    <form id="myForm">
+      <!-- Hidden field to store ID for updates -->
+      <input
+        type="hidden"
+        name="id"
+        id="id"
+      />
+
+      <fieldset>
+        <label for="concertName">Concert Name</label>
+        <input
+          required
+          type="text"
+          name="concertName"
+          id="concertName"
+          placeholder="e.g. The Starry Night Tour"
+          autocomplete="off"
+        />
+        <small class="validation">Concert name is required</small>
+      </fieldset>
+
+      <fieldset>
+        <label for="artist">Artist Name</label>
+        <input
+          required
+          type="text"
+          name="artist"
+          id="artist"
+          placeholder="e.g. Taylor Swift"
+          autocomplete="off"
+        />
+        <small class="validation">Artist is required</small>
+      </fieldset>
+
+      <fieldset>
+        <label for="venue">Venue</label>
+        <input
+          type="text"
+          name="venue"
+          id="venue"
+          placeholder="e.g. Scotiabank Arena"
+          autocomplete="off"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="city">City</label>
+        <input
+          type="text"
+          name="city"
+          id="city"
+          placeholder="e.g. Toronto, ON"
+          autocomplete="off"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="concertDate">Concert Date</label>
+        <input
+          type="date"
+          name="concertDate"
+          id="concertDate"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="startTime">Start Time</label>
+        <input
+          type="time"
+          name="startTime"
+          id="startTime"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="ticketType">Ticket Type</label>
+        <select
+          name="ticketType"
+          id="ticketType"
+        >
+          <option
+            value=""
+            disabled
+            selected
+          >Select a ticket type</option>
+          <optgroup label="General">
+            <option value="General Admission">General Admission</option>
+            <option value="Seated">Seated</option>
+            <option value="Balcony">Balcony</option>
+          </optgroup>
+          <optgroup label="Premium">
+            <option value="VIP">VIP</option>
+            <option value="Floor">Floor</option>
+            <option value="Meet & Greet">Meet &amp; Greet</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="Resale">Resale</option>
+            <option value="Other">Other</option>
+          </optgroup>
+        </select>
+      </fieldset>
+
+      <fieldset>
+        <label for="price">Ticket Price (in CAD)</label>
+        <small>Use numbers only</small>
+        <input
+          type="number"
+          name="price"
+          id="price"
+          min="0"
+          step="0.01"
+          placeholder="e.g. 129.99"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="seatInfo">Section / Row / Seat</label>
+        <input
+          type="text"
+          name="seatInfo"
+          id="seatInfo"
+          placeholder="e.g. Sec 112, Row F, Seat 8"
+          autocomplete="off"
+        />
+      </fieldset>
+
+      <fieldset>
+        <label for="hypeLevel">Excitement Level</label>
+        <small>How hyped are you for this show?</small>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          name="hypeLevel"
+          id="hypeLevel"
+        />
+      </fieldset>
+
+      <fieldset>
+        <button class="save">Save</button>
+        <button
+          class="cancel"
+          type="button"
+          popovertarget="formPopover"
+          popovertargetaction="hide"
+        >
+          Cancel
+        </button>
+      </fieldset>
+    </form>
+  </div>
+
+  <main>
+    <h2>🎵 Your Concert Tickets</h2>
+    <section id="contentArea"></section>
+  </main>
+
+  <section id="intro">
+    <h3>About</h3>
+    <p>
+      This page lets you manage a collection of concert tickets using full
+      <a href="https://developer.mozilla.org/en-US/docs/Glossary/CRUD">CRUD</a> operations:
+      Create, Read, Update, and Delete.
+    </p>
+    <p>
+      Instead of cats, our database now stores concert tickets. Each ticket is one document
+      in MongoDB with fields such as concert name, artist, venue, date, seat details, and price.
+    </p>
+    <ol>
+      <li>
+        Use the <strong>Create New Ticket</strong> button to open the form and add a new concert.
+      </li>
+      <li>
+        Existing tickets will appear in the list below. You can edit or delete them with the
+        buttons that your JavaScript will generate for each record.
+      </li>
+      <li>
+        On the backend, Express endpoints listen for HTTP requests (GET, POST, PUT, DELETE)
+        and Prisma or Mongoose (depending on your setup) talks to MongoDB.
+      </li>
+    </ol>
+    <p>
+      By connecting the form, the display template, and the API endpoints, you can track all the concerts
+      you’ve gone to (or plan to go to) in one place.
+    </p>
+  </section>
+
+  <footer>
+    Created in the context of Systems Design in the Interaction Design program at Sheridan College.
+  </footer>
+
+  <script
+    src="script.js"
+    type="module"
+  ></script>
+
+</body>
+
+</html>
